@@ -1,0 +1,14 @@
+C:\Users\ovosmushko\source\repos\s2geometrytest\s2geometrytest\bin\Debug\netcoreapp2.1\s2geometrytest.deps.json
+C:\Users\ovosmushko\source\repos\s2geometrytest\s2geometrytest\bin\Debug\netcoreapp2.1\s2geometrytest.runtimeconfig.json
+C:\Users\ovosmushko\source\repos\s2geometrytest\s2geometrytest\bin\Debug\netcoreapp2.1\s2geometrytest.runtimeconfig.dev.json
+C:\Users\ovosmushko\source\repos\s2geometrytest\s2geometrytest\bin\Debug\netcoreapp2.1\s2geometrytest.dll
+C:\Users\ovosmushko\source\repos\s2geometrytest\s2geometrytest\obj\Debug\netcoreapp2.1\s2geometrytest.csprojAssemblyReference.cache
+C:\Users\ovosmushko\source\repos\s2geometrytest\s2geometrytest\obj\Debug\netcoreapp2.1\s2geometrytest.csproj.CoreCompileInputs.cache
+C:\Users\ovosmushko\source\repos\s2geometrytest\s2geometrytest\obj\Debug\netcoreapp2.1\s2geometrytest.AssemblyInfoInputs.cache
+C:\Users\ovosmushko\source\repos\s2geometrytest\s2geometrytest\obj\Debug\netcoreapp2.1\s2geometrytest.AssemblyInfo.cs
+C:\Users\ovosmushko\source\repos\s2geometrytest\s2geometrytest\bin\Debug\netcoreapp2.1\s2geometrytest.pdb
+C:\Users\ovosmushko\source\repos\s2geometrytest\s2geometrytest\obj\Debug\netcoreapp2.1\s2geometrytest.dll
+C:\Users\ovosmushko\source\repos\s2geometrytest\s2geometrytest\obj\Debug\netcoreapp2.1\s2geometrytest.pdb
+C:\Users\ovosmushko\source\repos\s2geometrytest\s2geometrytest\bin\Debug\netcoreapp2.1\BTree.dll
+C:\Users\ovosmushko\source\repos\s2geometrytest\s2geometrytest\bin\Debug\netcoreapp2.1\BTree.pdb
+C:\Users\ovosmushko\source\repos\s2geometrytest\s2geometrytest\obj\Debug\netcoreapp2.1\s2geometrytest.csproj.CopyComplete

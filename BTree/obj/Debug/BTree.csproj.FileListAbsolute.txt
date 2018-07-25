@@ -1,0 +1,6 @@
+C:\Users\ovosmushko\source\repos\s2geometrytest\BTree\bin\Debug\BTree.dll
+C:\Users\ovosmushko\source\repos\s2geometrytest\BTree\bin\Debug\BTree.pdb
+C:\Users\ovosmushko\source\repos\s2geometrytest\BTree\obj\Debug\BTree.csprojAssemblyReference.cache
+C:\Users\ovosmushko\source\repos\s2geometrytest\BTree\obj\Debug\BTree.csproj.CoreCompileInputs.cache
+C:\Users\ovosmushko\source\repos\s2geometrytest\BTree\obj\Debug\BTree.dll
+C:\Users\ovosmushko\source\repos\s2geometrytest\BTree\obj\Debug\BTree.pdb

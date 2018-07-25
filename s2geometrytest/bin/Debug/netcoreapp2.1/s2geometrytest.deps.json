@@ -1,0 +1,52 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v2.1",
+    "signature": "65a616d75f088a50a630b86037b9e31df36c5e1e"
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v2.1": {
+      "s2geometrytest/1.0.0": {
+        "dependencies": {
+          "BTree": "1.0.0",
+          "S2Geometry": "1.0.3"
+        },
+        "runtime": {
+          "s2geometrytest.dll": {}
+        }
+      },
+      "S2Geometry/1.0.3": {
+        "runtime": {
+          "lib/netstandard1.0/S2Geometry.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "BTree/1.0.0": {
+        "runtime": {
+          "BTree.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "s2geometrytest/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "S2Geometry/1.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8xOrHZy6y4QRS+3p7GYc52y3dGlMVKtodXN78ReCdXvkWNtm9Tpi1MUIXAD/WVrOlDPJySk1gF+3ht8PaOSKeg==",
+      "path": "s2geometry/1.0.3",
+      "hashPath": "s2geometry.1.0.3.nupkg.sha512"
+    },
+    "BTree/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
