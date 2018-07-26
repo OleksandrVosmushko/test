@@ -3,6 +3,7 @@ using Google.Common.Geometry;
 using RangeTree;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace s2geometrytest
@@ -29,13 +30,16 @@ namespace s2geometrytest
     }
     class IndexWithRange
     {
-        public RangeTree<S2CellId, SimpleRangeItem> rtree;
+        public RangeTreeAsync<S2CellId, SimpleRangeItem> rtree;
 
         private int _level;
+        private SortedDictionary<Guid, S2CellId> _currentUsersLocations;
+
         public IndexWithRange(int level)
         {
-            rtree = new RangeTree<S2CellId, SimpleRangeItem>(new SimpleRangeItemComparer());
+            rtree = new RangeTreeAsync<S2CellId, SimpleRangeItem>(new SimpleRangeItemComparer());
             _level = level;
+            _currentUsersLocations = new SortedDictionary<Guid, S2CellId>();
         }
 
         public void AddUser(Guid uid, double lon, double lat)
@@ -49,7 +53,7 @@ namespace s2geometrytest
             //var userList = new UserList { s2CellId = cellIdStorageLevel, list = new List<Guid>() };
 
             var query_res = rtree.Query(cellIdStorageLevel);
-
+            _currentUsersLocations[uid] = cellIdStorageLevel;
             SimpleRangeItem rangeItem =null;
 
             if (query_res.Count > 0 )
@@ -74,7 +78,37 @@ namespace s2geometrytest
 
             rtree.Add(rangeItem);
         }
+        public  bool RemoveUser(Guid uid)
+        {
+            var cell = _currentUsersLocations[uid];
 
+            var query_res = rtree.Query(cell);
+
+            var clone = query_res.ToList();
+
+            foreach (var q in clone)
+            {
+                var toremove = q.Content.FirstOrDefault(u => u == uid);
+
+                if (toremove == null)
+                    return false;
+                q.Content.Remove(toremove);
+
+            }
+
+            //if (query_res.Count > 0)
+            //{
+            //    rtree.Remove(query_res[0]);
+            //    if (clone.Count != 0)
+            //    {
+            //        rtree.Add(new SimpleRangeItem { Range = new Range<S2CellId>(clone[0].Range.From), Content = clone[0].Content });
+            //    }
+
+            //}
+            //else return false;
+            rtree.Rebuild();
+            return true;
+        }
         public List<Guid> Search(double lon, double lat, int radius)
         {
             var latlng = S2LatLng.FromDegrees(lat, lon);
@@ -238,8 +272,7 @@ namespace s2geometrytest
 
                         begin = begin.Next;
                     } while (begin.Id != end.Id);
-
-                    //   return res;
+                    
                 }
                 else
                 {

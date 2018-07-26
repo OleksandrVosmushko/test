@@ -25,10 +25,10 @@ namespace s2geometrytest
 
             //var lon = id.ToLatLng();
 
-
+            var from = DateTime.Now;
             var i = new IndexWithRange(13);
-
-            i.AddUser(Guid.NewGuid(), 14.1313, 14.1313);
+            var id = Guid.NewGuid();
+            i.AddUser(id, 14.1313, 14.1313);
 
             i.AddUser(Guid.NewGuid(), 14.1314, 14.1314);
 
@@ -38,12 +38,18 @@ namespace s2geometrytest
 
             i.AddUser(Guid.NewGuid(), 14.0313, 14.0313);
 
-            //var rand = new Random();
-            //for (int j = 0; j < 1000; ++j)
+            var rand = new Random();
+            //for (int j = 0; j < 10000; ++j)
             //{
             //    i.AddUser(Guid.NewGuid(), rand.NextDouble() + 13.6, rand.NextDouble() + 13.6);
             //}
+            var to = DateTime.Now;
+            var least = (to - from).TotalMilliseconds;
+            TestSearch(i);
 
+
+            i.RemoveUser(id);
+           // System.Threading.Thread.Sleep(100);
             TestSearch(i);
 
             Console.WriteLine();
@@ -53,18 +59,16 @@ namespace s2geometrytest
         {
             var from = DateTime.Now;
 
-
-            var found = i.Search(14.1313, 14.1313, 2000);
+            
+            var found = i.Search(14.1313, 14.1313, 20000);
 
             var to = DateTime.Now;
 
             var least = (to - from).TotalMilliseconds;
+            Console.Write(found.Count);
             //35 - 45 ms
             //75 - 90 ms with 1000
             return;
         }
-
-     
-
     }
 }
