@@ -237,6 +237,15 @@
         "runtime": {
           "bin/placeholder/BTree.dll": {}
         }
+      },
+      "IntervalTree/1.0.0": {
+        "type": "project",
+        "compile": {
+          "bin/placeholder/IntervalTree.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/IntervalTree.dll": {}
+        }
       }
     }
   },
@@ -736,34 +745,40 @@
       "type": "project",
       "path": "../BTree/BTree.csproj",
       "msbuildProject": "../BTree/BTree.csproj"
+    },
+    "IntervalTree/1.0.0": {
+      "type": "project",
+      "path": "../IntervalTree/IntervalTree.csproj",
+      "msbuildProject": "../IntervalTree/IntervalTree.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.1": [
       "BTree >= 1.0.0",
+      "IntervalTree >= 1.0.0",
       "Microsoft.NETCore.App >= 2.1.0",
       "RangeTree >= 1.0.6",
       "S2Geometry >= 1.0.3"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ovosmushko\\.nuget\\packages\\": {},
+    "C:\\Users\\1pi15\\.nuget\\packages\\": {},
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ovosmushko\\source\\repos\\s2geometrytest\\s2geometrytest\\s2geometrytest.csproj",
+      "projectUniqueName": "C:\\dev\\examples\\test\\s2geometrytest\\s2geometrytest.csproj",
       "projectName": "s2geometrytest",
-      "projectPath": "C:\\Users\\ovosmushko\\source\\repos\\s2geometrytest\\s2geometrytest\\s2geometrytest.csproj",
-      "packagesPath": "C:\\Users\\ovosmushko\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ovosmushko\\source\\repos\\s2geometrytest\\s2geometrytest\\obj\\",
+      "projectPath": "C:\\dev\\examples\\test\\s2geometrytest\\s2geometrytest.csproj",
+      "packagesPath": "C:\\Users\\1pi15\\.nuget\\packages\\",
+      "outputPath": "C:\\dev\\examples\\test\\s2geometrytest\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
       ],
       "configFilePaths": [
-        "C:\\Users\\ovosmushko\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\1pi15\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
@@ -776,8 +791,11 @@
       "frameworks": {
         "netcoreapp2.1": {
           "projectReferences": {
-            "C:\\Users\\ovosmushko\\source\\repos\\s2geometrytest\\BTree\\BTree.csproj": {
-              "projectPath": "C:\\Users\\ovosmushko\\source\\repos\\s2geometrytest\\BTree\\BTree.csproj"
+            "C:\\dev\\examples\\test\\BTree\\BTree.csproj": {
+              "projectPath": "C:\\dev\\examples\\test\\BTree\\BTree.csproj"
+            },
+            "C:\\dev\\examples\\test\\IntervalTree\\IntervalTree.csproj": {
+              "projectPath": "C:\\dev\\examples\\test\\IntervalTree\\IntervalTree.csproj"
             }
           }
         }

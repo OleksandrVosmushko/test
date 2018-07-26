@@ -1,0 +1,6 @@
+C:\dev\examples\test\IntervalTree\bin\Debug\IntervalTree.dll
+C:\dev\examples\test\IntervalTree\bin\Debug\IntervalTree.pdb
+C:\dev\examples\test\IntervalTree\obj\Debug\IntervalTree.csprojAssemblyReference.cache
+C:\dev\examples\test\IntervalTree\obj\Debug\IntervalTree.csproj.CoreCompileInputs.cache
+C:\dev\examples\test\IntervalTree\obj\Debug\IntervalTree.dll
+C:\dev\examples\test\IntervalTree\obj\Debug\IntervalTree.pdb

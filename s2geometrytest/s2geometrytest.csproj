@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BTree\BTree.csproj" />
+    <ProjectReference Include="..\IntervalTree\IntervalTree.csproj" />
   </ItemGroup>
 
 </Project>

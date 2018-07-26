@@ -30,14 +30,14 @@ namespace s2geometrytest
     }
     class IndexWithRange
     {
-        public RangeTreeAsync<S2CellId, SimpleRangeItem> rtree;
+        public RangeTree<S2CellId, SimpleRangeItem> rtree;
 
         private int _level;
         private SortedDictionary<Guid, S2CellId> _currentUsersLocations;
 
         public IndexWithRange(int level)
         {
-            rtree = new RangeTreeAsync<S2CellId, SimpleRangeItem>(new SimpleRangeItemComparer());
+            rtree = new RangeTree<S2CellId, SimpleRangeItem>(new SimpleRangeItemComparer());
             _level = level;
             _currentUsersLocations = new SortedDictionary<Guid, S2CellId>();
         }
@@ -84,9 +84,9 @@ namespace s2geometrytest
 
             var query_res = rtree.Query(cell);
 
-            var clone = query_res.ToList();
+            //var clone = query_res.ToList();
 
-            foreach (var q in clone)
+            foreach (var q in query_res)
             {
                 var toremove = q.Content.FirstOrDefault(u => u == uid);
 

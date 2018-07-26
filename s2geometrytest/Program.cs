@@ -1,5 +1,8 @@
 ﻿using Google.Common.Geometry;
 using System;
+using System.Collections.Generic;
+using System.Diagnostics.SymbolStore;
+using System.Runtime.Serialization.Formatters;
 
 namespace s2geometrytest
 {
@@ -26,7 +29,7 @@ namespace s2geometrytest
             //var lon = id.ToLatLng();
 
             var from = DateTime.Now;
-            var i = new IndexWithRange(13);
+            var i = new AnotherIndex(13);
             var id = Guid.NewGuid();
             i.AddUser(id, 14.1313, 14.1313);
 
@@ -39,18 +42,24 @@ namespace s2geometrytest
             i.AddUser(Guid.NewGuid(), 14.0313, 14.0313);
 
             var rand = new Random();
-            //for (int j = 0; j < 10000; ++j)
-            //{
-            //    i.AddUser(Guid.NewGuid(), rand.NextDouble() + 13.6, rand.NextDouble() + 13.6);
-            //}
+
+            var ids = new List<Guid>();
+            for (int k = 0; k < 5000; ++k)
+            {
+                ids.Add(Guid.NewGuid());
+            }
+            for (int j = 0; j < 5000; ++j)
+            {
+                i.AddUser(ids[j], rand.NextDouble() + 13.6, rand.NextDouble() + 13.6);
+            }
             var to = DateTime.Now;
             var least = (to - from).TotalMilliseconds;
-            TestSearch(i);
+            TestSearch2(i);
 
-
-            i.RemoveUser(id);
+            for(int  j=0 ;j<5000;++j)
+            i.RemoveUser(ids[j]);
            // System.Threading.Thread.Sleep(100);
-            TestSearch(i);
+            TestSearch2(i);
 
             Console.WriteLine();
         }
@@ -70,5 +79,22 @@ namespace s2geometrytest
             //75 - 90 ms with 1000
             return;
         }
+
+        public static void TestSearch2(AnotherIndex i)
+        {
+            var from = DateTime.Now;
+
+
+            var found = i.Search(14.1313, 14.1313, 50000);
+
+            var to = DateTime.Now;
+
+            var least = (to - from).TotalMilliseconds;
+            Console.Write(found.Count);
+            //35 - 45 ms
+            //75 - 90 ms with 1000
+            return;
+        }
+
     }
 }

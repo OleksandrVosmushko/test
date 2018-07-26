@@ -9,6 +9,7 @@
       "s2geometrytest/1.0.0": {
         "dependencies": {
           "BTree": "1.0.0",
+          "IntervalTree": "1.0.0",
           "RangeTree": "1.0.6",
           "S2Geometry": "1.0.3"
         },
@@ -36,6 +37,11 @@
         "runtime": {
           "BTree.dll": {}
         }
+      },
+      "IntervalTree/1.0.0": {
+        "runtime": {
+          "IntervalTree.dll": {}
+        }
       }
     }
   },
@@ -60,6 +66,11 @@
       "hashPath": "s2geometry.1.0.3.nupkg.sha512"
     },
     "BTree/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "IntervalTree/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
