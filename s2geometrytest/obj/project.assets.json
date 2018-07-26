@@ -208,6 +208,15 @@
           "build/netstandard2.0/NETStandard.Library.targets": {}
         }
       },
+      "RangeTree/1.0.6": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/RangeTree.dll": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/RangeTree.dll": {}
+        }
+      },
       "S2Geometry/1.0.3": {
         "type": "package",
         "dependencies": {
@@ -695,6 +704,21 @@
         "netstandard.library.nuspec"
       ]
     },
+    "RangeTree/1.0.6": {
+      "sha512": "XWtGLYpqVHAjTi5Lp7VyrZOU6t36S1Zc8fjRrgHEjdKF8kC8St0gKaJiy6Vv4oIPJoN3xClA7kahpM16egOBNg==",
+      "type": "package",
+      "path": "rangetree/1.0.6",
+      "files": [
+        "lib/net45/.xml",
+        "lib/net45/RangeTree.dll",
+        "lib/netstandard1.2/.xml",
+        "lib/netstandard1.2/RangeTree.dll",
+        "lib/netstandard2.0/.xml",
+        "lib/netstandard2.0/RangeTree.dll",
+        "rangetree.1.0.6.nupkg.sha512",
+        "rangetree.nuspec"
+      ]
+    },
     "S2Geometry/1.0.3": {
       "sha512": "8xOrHZy6y4QRS+3p7GYc52y3dGlMVKtodXN78ReCdXvkWNtm9Tpi1MUIXAD/WVrOlDPJySk1gF+3ht8PaOSKeg==",
       "type": "package",
@@ -718,6 +742,7 @@
     ".NETCoreApp,Version=v2.1": [
       "BTree >= 1.0.0",
       "Microsoft.NETCore.App >= 2.1.0",
+      "RangeTree >= 1.0.6",
       "S2Geometry >= 1.0.3"
     ]
   },
@@ -770,6 +795,10 @@
             "target": "Package",
             "version": "[2.1.0, )",
             "autoReferenced": true
+          },
+          "RangeTree": {
+            "target": "Package",
+            "version": "[1.0.6, )"
           },
           "S2Geometry": {
             "target": "Package",

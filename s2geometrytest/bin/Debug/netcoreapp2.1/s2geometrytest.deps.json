@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.1",
-    "signature": "65a616d75f088a50a630b86037b9e31df36c5e1e"
+    "signature": "5c18b440d301fb5ed00cd9a3fb639ccd0c98baae"
   },
   "compilationOptions": {},
   "targets": {
@@ -9,10 +9,19 @@
       "s2geometrytest/1.0.0": {
         "dependencies": {
           "BTree": "1.0.0",
+          "RangeTree": "1.0.6",
           "S2Geometry": "1.0.3"
         },
         "runtime": {
           "s2geometrytest.dll": {}
+        }
+      },
+      "RangeTree/1.0.6": {
+        "runtime": {
+          "lib/netstandard2.0/RangeTree.dll": {
+            "assemblyVersion": "1.0.6.0",
+            "fileVersion": "1.0.6.0"
+          }
         }
       },
       "S2Geometry/1.0.3": {
@@ -35,6 +44,13 @@
       "type": "project",
       "serviceable": false,
       "sha512": ""
+    },
+    "RangeTree/1.0.6": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-XWtGLYpqVHAjTi5Lp7VyrZOU6t36S1Zc8fjRrgHEjdKF8kC8St0gKaJiy6Vv4oIPJoN3xClA7kahpM16egOBNg==",
+      "path": "rangetree/1.0.6",
+      "hashPath": "rangetree.1.0.6.nupkg.sha512"
     },
     "S2Geometry/1.0.3": {
       "type": "package",
