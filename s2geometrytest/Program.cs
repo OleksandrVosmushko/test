@@ -60,6 +60,15 @@ namespace s2geometrytest
             i.RemoveUser(ids[j]);
            // System.Threading.Thread.Sleep(100);
             TestSearch2(i);
+            from = DateTime.Now;
+            for (int j = 0; j < 100000; ++j)
+            {
+                i.AddUser(Guid.NewGuid(), rand.NextDouble() + 13.6, rand.NextDouble() + 13.6);
+            }
+            to = DateTime.Now;
+            least = (to - from).TotalMilliseconds;
+
+            TestSearch2(i);
 
             Console.WriteLine();
         }
@@ -85,7 +94,7 @@ namespace s2geometrytest
             var from = DateTime.Now;
 
 
-            var found = i.Search(14.1313, 14.1313, 50000);
+            var found = i.Search(14.1313, 14.1313, 150000);
 
             var to = DateTime.Now;
 

@@ -141,10 +141,16 @@ namespace s2geometrytest
             {
                 var toremove = q.Start.list.FirstOrDefault(s => s == uid);
 
-                if (toremove == null)
+                if (toremove == default(Guid))
                     return false;
                 q.Start.list.Remove(toremove);
 
+                _currentUsersLocations.Remove(toremove);
+
+                if (q.Start.list.Count == 0)
+                {
+                    rtree.Remove(q);
+                }
             }
 
             //if (query_res.Count > 0)
