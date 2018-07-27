@@ -29,7 +29,7 @@ namespace s2geometrytest
             //var lon = id.ToLatLng();
 
             var from = DateTime.Now;
-            var i = new AnotherIndex(13);
+            var i = new DriverLocationIndex(13);
             var id = Guid.NewGuid();
             i.AddUser(id, 14.1313, 14.1313);
 
@@ -48,16 +48,17 @@ namespace s2geometrytest
             {
                 ids.Add(Guid.NewGuid());
             }
-            for (int j = 0; j < 5000; ++j)
-            {
-                i.AddUser(ids[j], rand.NextDouble() + 13.6, rand.NextDouble() + 13.6);
-            }
+            //for (int j = 0; j < 5000; ++j)
+            //{
+            //    i.AddUser(ids[j], rand.NextDouble() + 13.6, rand.NextDouble() + 13.6);
+            //}
             var to = DateTime.Now;
             var least = (to - from).TotalMilliseconds;
             TestSearch2(i);
-
-            for(int  j=0 ;j<5000;++j)
-            i.RemoveUser(ids[j]);
+            TestUpdate(i);
+            //for(int  j=0 ;j<5000;++j)
+            //i.RemoveUser(ids[j]);
+            i.RemoveUser(id);
            // System.Threading.Thread.Sleep(100);
             TestSearch2(i);
             from = DateTime.Now;
@@ -89,12 +90,12 @@ namespace s2geometrytest
             return;
         }
 
-        public static void TestSearch2(AnotherIndex i)
+        public static void TestSearch2(DriverLocationIndex i)
         {
             var from = DateTime.Now;
 
 
-            var found = i.Search(14.1313, 14.1313, 150000);
+            var found = i.Search(14.1313, 14.1313, 20000);
 
             var to = DateTime.Now;
 
@@ -105,5 +106,19 @@ namespace s2geometrytest
             return;
         }
 
+        public static void TestUpdate(DriverLocationIndex i)
+        {
+            var id = Guid.NewGuid();
+            i.AddUser(id, 10, 10);
+            var r1 = i.Search(10, 10, 1000);
+
+            var curPos = i._currentUsersLocations[id];
+            i.UpdateUser(id, 20, 20);
+
+            var r2 = i.Search(10, 10, 1000);
+            var r3 = i.Search(20, 20, 1000);
+
+            var cell = i._currentUsersLocations[id];
+        }
     }
 }

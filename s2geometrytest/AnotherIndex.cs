@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,164 +8,230 @@ using IntervalTree;
 
 namespace s2geometrytest
 {
-    class AnotherIndex
+    class DriverLocationIndex
     {
         private int _level;
         private IntervalTree<UserList> rtree;
-        private SortedDictionary<Guid, S2CellId> _currentUsersLocations;
+        public ConcurrentDictionary<Guid, S2CellId> _currentUsersLocations;
+        static object locker = new object();
 
         public struct UserList : IComparable<UserList>
         {
             public S2CellId s2CellId;
 
             public List<Guid> list;
-            
+
             public int CompareTo(UserList other)
             {
                 return s2CellId.CompareTo(other.s2CellId);
             }
         }
 
-        public AnotherIndex(int level)
+        public DriverLocationIndex(int level)
         {
             rtree = new IntervalTree<UserList>();
             _level = level;
-            _currentUsersLocations = new SortedDictionary<Guid, S2CellId>();
+            _currentUsersLocations = new ConcurrentDictionary<Guid, S2CellId>();
+        }
+
+        public bool UpdateUser(Guid uid, double lon, double lat)
+        {
+            lock (locker)
+            {
+                var lonLat = S2LatLng.FromDegrees(lat, lon);
+
+                var cellId = S2CellId.FromLatLng(lonLat);
+
+                var cellIdStorageLevel = cellId.ParentForLevel(_level);
+
+                if (!_currentUsersLocations.ContainsKey(uid))
+                    return false;
+
+                var oldCell = _currentUsersLocations[uid];
+
+                if (oldCell == cellIdStorageLevel)
+                {
+                    return true;
+                }
+                _currentUsersLocations[uid] = cellIdStorageLevel;
+
+                var query_res = rtree.Search(new UserList() { s2CellId = oldCell });
+
+                var users = new List<Guid>();
+                if (query_res.Count > 0)
+                {
+                    //remove from old cell
+                    foreach (var item in query_res)
+                    {
+                        item.Start.list.Remove(uid);
+                        if (item.Start.list.Count == 0)
+                        {
+                            rtree.Remove(item);
+                        }
+                    }
+                }
+                
+                query_res = rtree.Search(new UserList() { s2CellId = cellIdStorageLevel });
+
+                if (query_res.Count > 0)
+                {
+                    foreach (var item in query_res)
+                    {
+                        item.Start.list.Add(uid);
+                    }
+                    return true;
+                }
+                users.Add(uid);
+
+                var toinsert = new UserList() { s2CellId = cellIdStorageLevel, list = users };
+
+                rtree.Add(new Interval<UserList>() { Start = toinsert, End = toinsert });
+                return true;
+            }
         }
 
         public void AddUser(Guid uid, double lon, double lat)
         {
-            var lonLat = S2LatLng.FromDegrees(lat, lon);
-
-            var cellId = S2CellId.FromLatLng(lonLat);
-
-            var cellIdStorageLevel = cellId.ParentForLevel(_level);
-
-            //var userList = new UserList { s2CellId = cellIdStorageLevel, list = new List<Guid>() };
-            _currentUsersLocations[uid] = cellIdStorageLevel;
-
-            var query_res = rtree.Search(new UserList(){s2CellId = cellIdStorageLevel });
-
-            var users = new List<Guid>();
-            if (query_res.Count > 0)
+            lock (locker)
             {
-               
-                foreach (var item in query_res)
+                var lonLat = S2LatLng.FromDegrees(lat, lon);
+
+                var cellId = S2CellId.FromLatLng(lonLat);
+
+                var cellIdStorageLevel = cellId.ParentForLevel(_level);
+
+                _currentUsersLocations[uid] = cellIdStorageLevel;
+
+                var query_res = rtree.Search(new UserList() { s2CellId = cellIdStorageLevel });
+
+                var users = new List<Guid>();
+                if (query_res.Count > 0)
                 {
-                    users.AddRange(item.Start.list);
+                    foreach (var item in query_res)
+                    {
+                        item.Start.list.Add(uid);
+                    }
+                    return;
                 }
-                
-                
-                rtree.Remove(query_res[0]);
 
+                users.Add(uid);
+
+                var toinsert = new UserList() { s2CellId = cellIdStorageLevel, list = users };
+
+                rtree.Add(new Interval<UserList>() { Start = toinsert, End = toinsert });
             }
-            users.Add(uid);
-
-            var toinsert = new UserList() { s2CellId = cellIdStorageLevel, list = users };
-
-            
-            rtree.Add(new Interval<UserList>(){Start = toinsert, End = toinsert});
-
         }
+
 
         public List<Guid> Search(double lon, double lat, int radius)
         {
-            var latlng = S2LatLng.FromDegrees(lat, lon);
-
-            var centerPoint = Index.pointFromLatLng(lat, lon);
-
-            var centerAngle = ((double)radius) / Index.EarthRadiusM;
-
-            var cap = S2Cap.FromAxisAngle(centerPoint, S1Angle.FromRadians(centerAngle));
-
-            var regionCoverer = new S2RegionCoverer();
-
-            regionCoverer.MaxLevel = 13;
-
-            //  regionCoverer.MinLevel = 13;
-
-
-            //regionCoverer.MaxCells = 1000;
-            // regionCoverer.LevelMod = 0;
-
-
-            var covering = regionCoverer.GetCovering(cap);
-
-
-
-            var res = new List<Guid>();
-
-
-            foreach (var u in covering)
+            lock (locker)
             {
-                var sell = new S2CellId(u.Id);
+                var latlng = S2LatLng.FromDegrees(lat, lon);
 
-                if (sell.Level < _level)
+                var centerPoint = pointFromLatLng(lat, lon);
+
+                var centerAngle = ((double)radius) / EarthRadiusM;
+
+                var cap = S2Cap.FromAxisAngle(centerPoint, S1Angle.FromRadians(centerAngle));
+
+                var regionCoverer = new S2RegionCoverer();
+
+                regionCoverer.MaxLevel = 13;
+
+                //  regionCoverer.MinLevel = 13;
+
+
+                //regionCoverer.MaxCells = 1000;
+                // regionCoverer.LevelMod = 0;
+
+
+                var covering = regionCoverer.GetCovering(cap);
+
+
+
+                var res = new List<Guid>();
+
+
+                foreach (var u in covering)
                 {
-                    var begin = sell.ChildBeginForLevel(_level);
-                    var end = sell.ChildEndForLevel(_level);
+                    var sell = new S2CellId(u.Id);
 
-                    var qres = rtree.Search(new Interval<UserList>(new UserList(){s2CellId = begin}, new UserList(){s2CellId = end}));
-
-
-                    foreach (var item in qres)
+                    if (sell.Level < _level)
                     {
+                        var begin = sell.ChildBeginForLevel(_level);
+                        var end = sell.ChildEndForLevel(_level);
 
-                        res.AddRange(item.Start.list);
-                    }
-                }
-                else
-                {
-                    var qres = rtree.Search(new UserList() { s2CellId = sell });
-                    if (qres.Count > 0)
-                    {
-                        foreach (var r in qres)
+                        var qres = rtree.Search(new Interval<UserList>(new UserList() { s2CellId = begin }, new UserList() { s2CellId = end }));
+
+
+                        foreach (var item in qres)
                         {
-                            res.AddRange(r.Start.list);
+
+                            res.AddRange(item.Start.list);
+                        }
+                    }
+                    else
+                    {
+                        var qres = rtree.Search(new UserList() { s2CellId = sell });
+                        if (qres.Count > 0)
+                        {
+                            foreach (var r in qres)
+                            {
+                                res.AddRange(r.Start.list);
+                            }
                         }
                     }
                 }
+                return res;
             }
-            return res;
         }
 
 
         public bool RemoveUser(Guid uid)
         {
-            var cell = _currentUsersLocations[uid];
-
-            
-            var qres = rtree.Search(new Interval<UserList>(new UserList() { s2CellId = cell }, new UserList() { s2CellId = cell}));
-            //var clone = query_res.ToList();
-
-            foreach (var q in qres)
+            lock (locker)
             {
-                var toremove = q.Start.list.FirstOrDefault(s => s == uid);
+                var cell = _currentUsersLocations[uid];
 
-                if (toremove == default(Guid))
-                    return false;
-                q.Start.list.Remove(toremove);
+                var qres = rtree.Search(new Interval<UserList>(new UserList() { s2CellId = cell }, new UserList() { s2CellId = cell }));
 
-                _currentUsersLocations.Remove(toremove);
-
-                if (q.Start.list.Count == 0)
+                foreach (var q in qres)
                 {
-                    rtree.Remove(q);
+                    var toremove = q.Start.list.FirstOrDefault(s => s == uid);
+
+                    if (toremove == default(Guid))
+                        return false;
+                    q.Start.list.Remove(toremove);
+
+                    var removeOutParameter = new S2CellId();
+
+                    _currentUsersLocations.TryRemove(toremove, out removeOutParameter);
+
+                    if (q.Start.list.Count == 0)
+                    {
+                        rtree.Remove(q);
+                    }
                 }
+                return true;
             }
-
-            //if (query_res.Count > 0)
-            //{
-            //    rtree.Remove(query_res[0]);
-            //    if (clone.Count != 0)
-            //    {
-            //        rtree.Add(new SimpleRangeItem { Range = new Range<S2CellId>(clone[0].Range.From), Content = clone[0].Content });
-            //    }
-
-            //}
-            //else return false;
-           
-            return true;
         }
+
+
+
+        static S2Point pointFromLatLng(double lat, double lon)
+        {
+            var phi = ConvertToRadians(lat);
+            var theta = ConvertToRadians(lon);
+            var cosPhi = Math.Cos(phi);
+            return new S2Point(Math.Cos(theta) * cosPhi, Math.Sin(theta) * cosPhi, Math.Sin(phi));
+        }
+        static double ConvertToRadians(double angle)
+        {
+            return (Math.PI / 180) * angle;
+        }
+
+        const double EarthRadiusM = 6371010.0;
+        
     }
 }

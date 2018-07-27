@@ -4,3 +4,9 @@ C:\dev\examples\test\IntervalTree\obj\Debug\IntervalTree.csprojAssemblyReference
 C:\dev\examples\test\IntervalTree\obj\Debug\IntervalTree.csproj.CoreCompileInputs.cache
 C:\dev\examples\test\IntervalTree\obj\Debug\IntervalTree.dll
 C:\dev\examples\test\IntervalTree\obj\Debug\IntervalTree.pdb
+C:\Users\ovosmushko\source\repos\s2geometrytest\IntervalTree\bin\Debug\IntervalTree.dll
+C:\Users\ovosmushko\source\repos\s2geometrytest\IntervalTree\bin\Debug\IntervalTree.pdb
+C:\Users\ovosmushko\source\repos\s2geometrytest\IntervalTree\obj\Debug\IntervalTree.csprojAssemblyReference.cache
+C:\Users\ovosmushko\source\repos\s2geometrytest\IntervalTree\obj\Debug\IntervalTree.csproj.CoreCompileInputs.cache
+C:\Users\ovosmushko\source\repos\s2geometrytest\IntervalTree\obj\Debug\IntervalTree.dll
+C:\Users\ovosmushko\source\repos\s2geometrytest\IntervalTree\obj\Debug\IntervalTree.pdb

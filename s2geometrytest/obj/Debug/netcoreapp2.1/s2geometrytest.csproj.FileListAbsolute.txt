@@ -28,3 +28,5 @@ C:\dev\examples\test\s2geometrytest\obj\Debug\netcoreapp2.1\s2geometrytest.dll
 C:\dev\examples\test\s2geometrytest\obj\Debug\netcoreapp2.1\s2geometrytest.pdb
 C:\dev\examples\test\s2geometrytest\bin\Debug\netcoreapp2.1\IntervalTree.dll
 C:\dev\examples\test\s2geometrytest\bin\Debug\netcoreapp2.1\IntervalTree.pdb
+C:\Users\ovosmushko\source\repos\s2geometrytest\s2geometrytest\bin\Debug\netcoreapp2.1\IntervalTree.dll
+C:\Users\ovosmushko\source\repos\s2geometrytest\s2geometrytest\bin\Debug\netcoreapp2.1\IntervalTree.pdb
